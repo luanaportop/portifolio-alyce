@@ -1,0 +1,591 @@
+/* =========================================================
+   PORTFÓLIO — ALYCE VINHAL
+   Layout fluido para web e mobile
+
+   Sumário
+   01. Tokens (cores, fontes, medidas)
+   02. Reset e base
+   03. Estrutura da seção (.slide) e linha de separação
+   04. Cabeçalho e rodapé das seções
+   05. Capa e encerramento
+   06. Seção "quem sou eu"
+   07. Grade de projetos
+   08. Vídeo e botão de play
+   09. Responsivo (tablet e celular)
+   10. Impressão / exportação em PDF
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   01. TOKENS
+   Mude as cores aqui e elas se propagam por todo o arquivo.
+   --------------------------------------------------------- */
+:root {
+  /* Paleta */
+  --grafite:   #14161A;  /* base escura: capa e encerramento     */
+  --ardosia:   #2E3440;  /* texto secundário, divisórias         */
+  --areia:     #F4F1EA;  /* fundo das seções de projeto          */
+  --terracota: #C25B3A;  /* acento — usar com parcimônia (~5%)   */
+  --ouro:      #A89474;  /* apoio: rótulos sobre fundo escuro    */
+  --salvia:    #6B7A6E;  /* apoio: rodapé sobre fundo escuro     */
+  --mount:     #E8E3D8;  /* fundo do passe-partout das imagens   */
+  --hairline:  #D8D2C6;  /* linhas finas sobre fundo claro       */
+  --hairline-dark: #2E3440; /* linhas finas sobre fundo escuro   */
+
+  /* Tipografia */
+  --font-titulo: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-texto:  'Inter', -apple-system, 'Segoe UI', Helvetica, sans-serif;
+  --font-mono:   'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+
+  /* Medidas fluidas — clamp(mínimo, ideal, máximo) */
+  --margem-lateral: clamp(24px, 6vw, 120px);
+  --margem-topo:    clamp(48px, 7vh, 96px);
+  --margem-base:    clamp(72px, 8vh, 110px);
+}
+
+
+/* ---------------------------------------------------------
+   02. RESET E BASE
+   --------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--areia);
+  color: var(--grafite);
+  font-family: var(--font-texto);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+
+/* ---------------------------------------------------------
+   03. ESTRUTURA DA SEÇÃO E LINHA DE SEPARAÇÃO
+   Cada .slide ocupa a largura toda e no mínimo a altura da tela.
+   --------------------------------------------------------- */
+.slide {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;          /* corrige a barra do navegador no celular */
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: var(--margem-topo) var(--margem-lateral) var(--margem-base);
+}
+
+.slide.light {
+  background: var(--areia);
+  color: var(--grafite);
+}
+
+.slide.dark {
+  background: var(--grafite);
+  color: var(--areia);
+}
+
+/* Linha de separação entre uma seção e a seguinte.
+   Aplicada com "+" para a primeira seção não ganhar linha no topo. */
+.slide + .slide {
+  border-top: 1px solid var(--hairline);
+}
+
+/* Quando a seção de baixo é escura, a linha some no fundo escuro:
+   usa-se um tom mais claro para ela continuar visível. */
+.slide + .slide.dark {
+  border-top-color: var(--ardosia);
+}
+
+
+/* ---------------------------------------------------------
+   04. CABEÇALHO E RODAPÉ DAS SEÇÕES
+   --------------------------------------------------------- */
+.slide-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: clamp(20px, 4vw, 48px);
+
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: clamp(16px, 2vh, 24px);
+  margin-bottom: clamp(28px, 4vh, 44px);
+}
+
+.slide-head h2 {
+  font-size: clamp(30px, 4.2vw, 52px);
+  line-height: 1;
+}
+
+/* Rótulo pequeno em caixa alta acima do título */
+.eyebrow {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--terracota);
+  margin-bottom: 8px;
+}
+
+/* Descrição do cliente / projeto, alinhada à direita */
+.kicker {
+  font-size: clamp(13px, 1.2vw, 15px);
+  line-height: 1.5;
+  color: var(--ardosia);
+  opacity: 0.75;
+  max-width: 520px;
+  text-align: right;
+}
+
+.slide-foot {
+  position: absolute;
+  left: var(--margem-lateral);
+  right: var(--margem-lateral);
+  bottom: clamp(28px, 4vh, 44px);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  font-size: clamp(10px, 0.9vw, 11px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ardosia);
+  opacity: 0.5;
+}
+
+
+/* ---------------------------------------------------------
+   05. CAPA E ENCERRAMENTO
+   --------------------------------------------------------- */
+.cover {
+  justify-content: center;
+  padding-left: clamp(40px, 8vw, 140px);
+  padding-right: clamp(24px, 8vw, 140px);
+}
+
+/* Faixa terracota vertical na borda esquerda */
+.edge-rule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(6px, 1vw, 14px);
+  height: 100%;
+  background: var(--terracota);
+}
+
+.cover h1 {
+  font-size: clamp(54px, 9.5vw, 150px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+
+.cover-eyebrow {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: clamp(16px, 3vh, 28px);
+}
+
+.cover-name {
+  margin-top: clamp(16px, 3vh, 28px);
+  font-size: clamp(14px, 1.6vw, 19px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--areia);
+}
+
+/* No encerramento a frase é uma linha corrida, não um nome */
+.end .cover-name {
+  font-size: clamp(14px, 1.5vw, 17px);
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ouro);
+}
+
+.cover-foot {
+  position: absolute;
+  left: clamp(40px, 8vw, 140px);
+  right: clamp(24px, 8vw, 140px);
+  bottom: clamp(32px, 5vh, 56px);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  font-size: clamp(11px, 1vw, 12px);
+  letter-spacing: 0.12em;
+  color: var(--salvia);
+  border-top: 1px solid var(--hairline-dark);
+  padding-top: 18px;
+}
+
+
+/* ---------------------------------------------------------
+   06. SEÇÃO "QUEM SOU EU"
+   --------------------------------------------------------- */
+.about {
+  display: grid;
+  grid-template-columns: 1fr clamp(280px, 30vw, 420px);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.lead {
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.65;
+  color: var(--ardosia);
+  max-width: 640px;
+  margin-bottom: clamp(28px, 4vh, 40px);
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+  margin-bottom: clamp(28px, 4vh, 42px);
+}
+
+.skills h3 {
+  font-family: var(--font-texto);
+  font-size: clamp(11px, 1.1vw, 13px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grafite);
+
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 12px;
+}
+
+.skills ul {
+  list-style: none;
+}
+
+.skills li {
+  font-size: clamp(13px, 1.2vw, 14px);
+  color: var(--ardosia);
+  opacity: 0.85;
+  padding: 3px 0;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 4vw, 56px);
+  border-top: 2px solid var(--terracota);
+  padding-top: 18px;
+}
+
+.contact p {
+  font-size: clamp(15px, 1.4vw, 17px);
+  color: var(--grafite);
+}
+
+.contact-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 5px;
+}
+
+.about-photo {
+  aspect-ratio: 4 / 5;
+  background: var(--mount);
+  border: 1px solid var(--hairline);
+}
+
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* ---------------------------------------------------------
+   07. GRADE DE PROJETOS
+   Cada seção usa duas classes:
+     .cols-2 / .cols-3            → número de colunas
+     .ratio-1-1 / -9-16 / -4-3    → formato das peças
+   --------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: clamp(20px, 2.6vw, 44px);
+  align-items: start;
+}
+
+.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Duas colunas não devem esticar demais em telas largas */
+.cols-2 { max-width: 900px; }
+.cols-2.ratio-9-16 { max-width: 720px; }
+
+/* Passe-partout: moldura clara em volta da peça */
+.mount {
+  background: var(--mount);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+}
+
+.mount img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Peças verticais (story, cartaz, vídeo) — mais estreitas e centradas */
+.ratio-9-16 .card {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.ratio-9-16 .mount {
+  max-height: 62vh;
+  margin: 0 auto;
+}
+
+/* Legenda: número em terracota + descrição da peça */
+figcaption {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+
+  border-top: 2px solid var(--terracota);
+  padding-top: 10px;
+  margin-top: 14px;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--terracota);
+  flex: none;
+}
+
+.lab {
+  font-size: clamp(12px, 1.1vw, 14px);
+  line-height: 1.4;
+  color: var(--ardosia);
+}
+
+
+/* ---------------------------------------------------------
+   08. VÍDEO E BOTÃO DE PLAY
+   O vídeo usa "contain" para aparecer inteiro, sem cortar.
+   --------------------------------------------------------- */
+.mount:has(video) {
+  background: var(--grafite);
+}
+
+.mount video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.video-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+/* Círculo terracota */
+.play-btn::before {
+  content: "";
+  width: clamp(52px, 6vw, 76px);
+  height: clamp(52px, 6vw, 76px);
+  border-radius: 50%;
+  background: var(--terracota);
+}
+
+/* Triângulo de play, centralizado sobre o círculo */
+.play-btn .triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 11px 0 11px 19px;
+  border-color: transparent transparent transparent var(--areia);
+  margin-left: 5px;
+}
+
+.play-btn:hover::before {
+  background: #A94A2C;
+}
+
+.play-btn:focus-visible {
+  outline: 2px solid var(--areia);
+  outline-offset: -6px;
+}
+
+/* Some assim que o vídeo começa */
+.video-wrap.playing .play-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   09. RESPONSIVO
+   --------------------------------------------------------- */
+
+/* Tablet e notebook pequeno */
+@media (max-width: 900px) {
+  .slide {
+    min-height: auto;                       /* deixa a seção encolher */
+    padding-bottom: clamp(80px, 12vh, 110px);
+  }
+
+  .slide-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .kicker {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  /* A foto vem antes do texto no celular */
+  .about-photo {
+    order: -1;
+    aspect-ratio: 3 / 4;      /* vertical, quase a proporção original */
+    max-width: 320px;
+    max-height: none;
+    margin: 0 auto;
+  }
+
+  .ratio-9-16 .mount {
+    max-height: none;                       /* a proporção manda sozinha */
+  }
+}
+
+/* Celular */
+@media (max-width: 560px) {
+  .slide {
+    padding-bottom: 96px;
+  }
+
+  .cols-3,
+  .cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .skills {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .ratio-9-16 .card {
+    max-width: 320px;
+  }
+
+  .slide-foot {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .cover-foot {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .play-btn {
+    transition: none;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   10. IMPRESSÃO / EXPORTAÇÃO EM PDF
+   No Chrome: Ctrl+P → Salvar como PDF →
+   marcar "Gráficos de plano de fundo", desmarcar cabeçalhos.
+   --------------------------------------------------------- */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .slide {
+    min-height: auto;
+    height: 100vh;
+    border-top: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .slide:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* O botão de play não faz sentido no papel */
+  .play-btn {
+    display: none;
+  }
+}
